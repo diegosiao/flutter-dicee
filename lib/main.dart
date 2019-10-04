@@ -1,4 +1,5 @@
-import 'package:flare_flutter/flare_actor.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,17 +17,57 @@ void main() {
   );
 }
 
-class DicePage extends StatelessWidget {
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 1;
+
+  throwDices() {
+    setState(() {
+      leftDiceNumber = Random().nextInt(6) + 1;
+      rightDiceNumber = Random().nextInt(6) + 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+//    return Center(
+//      child: AnimatedContainer(
+//        duration: Duration(milliseconds: 1000),
+//        child: FlareActor(
+//          'images/success-check.flr',
+//          animation: 'Untitled',
+//          isPaused: false,
+//        ),
+//      ),
+//    );
+
     return Center(
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 1000),
-        child: FlareActor(
-          'images/success-check.flr',
-          animation: 'Untitled',
-          isPaused: false,
-        ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: FlatButton(
+                child: Image.asset('images/dice$leftDiceNumber.png'),
+                onPressed: throwDices,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: FlatButton(
+                child: Image.asset('images/dice$rightDiceNumber.png'),
+                onPressed: throwDices,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
